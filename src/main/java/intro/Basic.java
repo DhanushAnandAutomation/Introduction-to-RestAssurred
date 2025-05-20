@@ -5,6 +5,8 @@ import io.restassured.path.json.JsonPath;
 
 import static org.hamcrest.Matchers.*;
 
+import org.testng.Assert;
+
 import files.Payload;
 
 import static io.restassured.RestAssured.*;
@@ -50,7 +52,9 @@ public class Basic {
 		System.out.println(response);
 		
 		//Object for JsonPath is created and 
-		JsonPath js= new JsonPath(response);
+		//JsonPath js= new JsonPath(response);  //traditional way to create an object
+		
+		JsonPath js =files.ReusableMethods.rawToJson(response);   //creating object using a another static class
 		
 		
 		String place_id= js.get("place_id");
@@ -58,11 +62,13 @@ public class Basic {
 		
 		//---------------------------PUT--------------------------------
 		
+		String newAddress="70 winter walk, USA";
+		
 		String response1=given().log().all().queryParam("key", "qaclick123")
 		.header("Content-Type", "application/json")
 		.body("{\r\n"
 				+ "\"place_id\":\""+place_id+"\",\r\n"
-				+ "\"address\":\"70 winter walk, USA\",\r\n"
+				+ "\"address\":\""+newAddress+"\",\r\n"
 				+ "\"key\":\"qaclick123\"\r\n"
 				+ "}")
 		.when().put("maps/api/place/update/json") //this 'when' is where we decide whether the request is POST or PUT or GET or DELETE
@@ -83,11 +89,14 @@ public class Basic {
 		
 		
 		
-		JsonPath js1= new JsonPath(response3);
+		JsonPath js1=files.ReusableMethods.rawToJson(response3);
 		
-		
+
 		String Updaddress= js1.get("address");
 		System.out.println(Updaddress);
+		Assert.assertEquals(Updaddress, newAddress); //assertion class in TestNG framework is used
+		
+		
 		
 
 	}
