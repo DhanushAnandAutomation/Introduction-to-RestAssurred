@@ -17,6 +17,24 @@ public class MockComplexJsonParsing {
 	
 	System.out.println(count);
 	
+	int puramnt=js.getInt("dashboard.purchaseAmount");
+	System.out.println(puramnt);
+	
+	String title1=js.get("courses[0].title");
+	
+	System.out.println(title1);
+	
+	String title2=js.get("courses[2].title");
+	
+	System.out.println(title2);
+	
+	for(int i=0;i<count;i++)
+	{
+		String title3=js.get("courses["+i+"].title");
+		System.out.println(title3);
+		
+	}
+	
 	
 	}
 
