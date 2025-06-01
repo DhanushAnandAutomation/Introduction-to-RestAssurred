@@ -32,6 +32,7 @@ public class MockComplexJsonParsing {
 	{
 		String title3=js.get("courses["+i+"].title");
 		System.out.println(title3);
+		//aa
 		
 	}
 	
